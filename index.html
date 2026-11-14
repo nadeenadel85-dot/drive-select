@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>DriveSelect</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<a class="skip" href="#main">Skip to main content</a>
+<header class="site-header">
+  <p class="brand">DRIVE<span class="sel">SELECT</span></p>
+  <nav id="nav" aria-label="Main" hidden>
+    <ul>
+      <li><a href="#dashboard" data-v="dashboard">Dashboard</a></li>
+      <li><a href="#new" data-v="new">New service record</a></li>
+      <li><a href="#records" data-v="records">All records</a></li>
+      <li><button type="button" id="signout" class="btn btn-light">Sign out</button></li>
+    </ul>
+  </nav>
+</header>
+
+<main id="main">
+  <!-- Status messages live here, always in the DOM so screen readers announce changes -->
+  <div id="status" role="status" aria-live="polite" class="status"></div>
+
+  <section id="v-signin" data-title="Sign in">
+    <div class="hero">
+      <div class="hero-text">
+        <p class="eyebrow">DriveSelect workshop system</p>
+        <h1 tabindex="-1" class="sr-only">Sign in to DriveSelect</h1>
+        <p class="lead">Find your next <span class="accent">perfect</span> drive</p>
+        <div class="login-card">
+          <div id="si-summary" class="error-summary" role="alert" hidden></div>
+          <form id="signin" novalidate>
+            <div class="field"><label for="user">Username</label>
+              <input id="user" name="user" autocomplete="username" aria-describedby="user-err"><p class="err" id="user-err"></p></div>
+            <div class="field"><label for="pass">Password</label>
+              <input id="pass" name="pass" type="password" autocomplete="current-password" aria-describedby="pass-err"><p class="err" id="pass-err"></p></div>
+            <button class="btn" type="submit" id="si-btn">Sign in</button>
+          </form>
+        </div>
+      </div>
+    </div>
+    <h2 class="sr-only">Performance highlights</h2>
+    <ul class="spec-strip">
+      <li><span class="num">530</span><span class="unit">HP</span><span class="sub">@ 7,200 RPM</span></li>
+      <li><span class="num">3.8</span><span class="unit">SEC</span><span class="sub">0-100 KM/H</span></li>
+      <li><span class="num">250</span><span class="unit">KM/H</span><span class="sub">TOP SPEED</span></li>
+    </ul>
+  </section>
+
+  <section id="v-dashboard" data-title="Dashboard" hidden>
+    <div class="dash-hero">
+      <h1 tabindex="-1">Welcome</h1>
+      <p>Welcome to <strong>DRIVE <span class="accent">SELECT</span></strong>, your trusted destination for buying and selling cars. Discover a wide range of vehicles, compare prices, and find the perfect car that matches your needs and budget. We make your car-buying journey easy, convenient, and enjoyable. Whether you're searching for your dream car or looking to sell your current vehicle, DRIVE SELECT is here to make every step simple and smooth.</p>
+      <p class="tagline">Your perfect drive starts here.</p>
+    </div>
+    <h2>Workshop overview</h2>
+    <ul class="stats" id="stats"><li>Loading overview&hellip;</li></ul>
+    <h2>Quick actions</h2>
+    <p><a class="btn" href="#new">Add a service record</a> <a class="btn btn-alt" href="#records">Search records</a></p>
+  </section>
+
+  <section id="v-new" data-title="New service record" hidden>
+    <h1 tabindex="-1">New service record</h1>
+    <p>Fields marked <span class="req">(required)</span> must be completed.</p>
+    <div id="f-summary" class="error-summary" role="alert" hidden></div>
+    <form id="rec" novalidate>
+      <div class="field"><label for="customer">Customer name <span class="req">(required)</span></label>
+        <input id="customer" name="customer" autocomplete="off" aria-describedby="customer-err"><p class="err" id="customer-err"></p></div>
+      <div class="field"><label for="reg">Registration plate <span class="req">(required)</span></label>
+        <input id="reg" name="reg" autocomplete="off" maxlength="8" aria-describedby="reg-hint reg-err">
+        <p class="hint" id="reg-hint">2 to 8 letters or numbers, for example AB12 CDE.</p><p class="err" id="reg-err"></p></div>
+      <div class="field"><label for="make">Make <span class="req">(required)</span></label>
+        <select id="make" name="make" aria-describedby="make-err"><option value="">Choose a make</option>
+          <option>Toyota</option><option>Ford</option><option>BMW</option><option>Honda</option><option>Nissan</option><option>Kia</option><option>Other</option></select>
+        <p class="err" id="make-err"></p></div>
+      <div class="field"><label for="mileage">Mileage (miles) <span class="req">(required)</span></label>
+        <input id="mileage" name="mileage" inputmode="numeric" autocomplete="off" aria-describedby="mileage-hint mileage-err">
+        <p class="hint" id="mileage-hint">Whole number, 0 to 999999.</p><p class="err" id="mileage-err"></p></div>
+      <div class="field"><label for="date">Date of work <span class="req">(required)</span></label>
+        <input id="date" name="date" type="date" aria-describedby="date-err"><p class="err" id="date-err"></p></div>
+      <fieldset class="field" aria-describedby="type-err"><legend>Job type <span class="req">(required)</span></legend>
+        <label class="opt"><input type="radio" name="type" value="Service" checked> Service</label>
+        <label class="opt"><input type="radio" name="type" value="Repair"> Repair</label>
+        <label class="opt"><input type="radio" name="type" value="MOT"> MOT</label>
+        <p class="err" id="type-err"></p></fieldset>
+      <div class="field" id="fault-wrap" hidden>
+        <label for="fault">Describe the fault <span class="req">(required for repairs)</span></label>
+        <textarea id="fault" name="fault" rows="3" aria-describedby="fault-err"></textarea><p class="err" id="fault-err"></p></div>
+      <fieldset class="field"><legend>Work carried out</legend>
+        <label class="opt"><input type="checkbox" name="work" value="Oil change"> Oil change</label>
+        <label class="opt"><input type="checkbox" name="work" value="Brakes"> Brakes</label>
+        <label class="opt"><input type="checkbox" name="work" value="Tyres"> Tyres</label>
+        <label class="opt"><input type="checkbox" name="work" value="Battery"> Battery</label></fieldset>
+      <div class="field"><label for="notes">Notes</label><textarea id="notes" name="notes" rows="3"></textarea></div>
+      <button class="btn" type="submit" id="save-btn">Save record</button>
+      <button class="btn btn-alt" type="reset" id="reset-btn">Clear form</button>
+    </form>
+  </section>
+
+  <section id="v-records" data-title="All records" hidden>
+    <h1 tabindex="-1">All service records</h1>
+    <form id="filters" role="search" aria-label="Filter records" class="filters">
+      <div class="field"><label for="q">Search name, plate or make</label><input id="q" type="search" autocomplete="off"></div>
+      <div class="field"><label for="ft">Job type</label>
+        <select id="ft"><option value="">All types</option><option>Service</option><option>Repair</option><option>MOT</option></select></div>
+      <button class="btn btn-alt" type="button" id="clear-f">Clear filters</button>
+    </form>
+    <p id="count" class="count"></p>
+    <div id="loading" class="loading" hidden>Loading records&hellip;</div>
+    <div id="empty" class="empty" hidden><h2>No records found</h2><p>Try a different search or <a href="#new">add a new record</a>.</p></div>
+    <table id="tbl">
+      <caption class="sr-only">Service records. Use the column header buttons to sort.</caption>
+      <thead><tr>
+        <th scope="col" data-k="date" aria-sort="none"><button type="button">Date</button></th>
+        <th scope="col" data-k="customer" aria-sort="none"><button type="button">Customer</button></th>
+        <th scope="col" data-k="reg" aria-sort="none"><button type="button">Plate</button></th>
+        <th scope="col" data-k="make" aria-sort="none"><button type="button">Make</button></th>
+        <th scope="col" data-k="mileage" aria-sort="none"><button type="button">Mileage</button></th>
+        <th scope="col" data-k="type" aria-sort="none"><button type="button">Type</button></th>
+        <th scope="col">Actions</th></tr></thead>
+      <tbody id="rows"></tbody>
+    </table>
+    <nav id="pager" aria-label="Pagination" class="pager">
+      <button class="btn btn-alt" type="button" id="prev">Previous page</button>
+      <span id="pginfo"></span>
+      <button class="btn btn-alt" type="button" id="next">Next page</button>
+    </nav>
+  </section>
+</main>
+<footer class="site-footer"><p>DriveSelect &ndash; coursework project. Designed to meet WCAG 2.1 AA.</p></footer>
+<script src="app.js"></script>
+</body>
+</html>

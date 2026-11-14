@@ -1,0 +1,1 @@
+car.jpg is the hero photo on the sign-in page. Replace it with another wide photo (same name) to change it.
